@@ -1,58 +1,46 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Saucedemo Playwright Testing', () => {
-    test.beforeEach(async ({page}) => {
-        await page.goto('https://www.saucedemo.com/')
-    })
-});
+    const users = [
+      { username: "standard_user", password: "secret_sauce", shouldLogin: true },
+      { username: "locked_out_user", password: "secret_sauce", shouldLogin: false, error: "Sorry, this user has been locked out." },
+      { username: "problem_user", password: "secret_sauce", shouldLogin: true },
+      { username: "performance_glitch_user", password: "secret_sauce", shouldLogin: true },
+      { username: "error_user", password: "secret_sauce", shouldLogin: true },
+      { username: "visual_user", password: "secret_sauce", shouldLogin: true }
+    ]
 
+    users.forEach(user => {
+      test(`Login  ${user.username}`, async ({ page }) => {
+        await page.goto('https://saucedemo.com/');
+        await page.fill('[data-test="username"]', user.username);
+        await page.fill('[data-test="password"]', user.password);
+        await page.click('[data-test="login-button"]');
+        if (user.shouldLogin) {
+            await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+        } else {
+            await expect(page.locator('[data-test="error]')).toHaveText('user.error');
+        };
+      });
+    });
 
+    test('Empty username and correct password', async ({ page }) => {
+        await page.goto('https://www.saucedemo.com/');
+        await page.fill('[data-test="password"]', 'secret_sauce');
+        await page.click('[data-test="login-button"]');
+        await expect(page).toHaveTitle('[data-test="title"]');
+    });
 
-// Cypress:
-// describe("Test Case 1", () => {
-//     const users = [
-//       { username: "standard_user", password: "secret_sauce", shouldLogin: true },
-//       { username: "locked_out_user", password: "secret_sauce", shouldLogin: false, error: "Sorry, this user has been locked out." },
-//       { username: "problem_user", password: "secret_sauce", shouldLogin: true },
-//       { username: "performance_glitch_user", password: "secret_sauce", shouldLogin: true },
-//       { username: "error_user", password: "secret_sauce", shouldLogin: true },
-//       { username: "visual_user", password: "secret_sauce", shouldLogin: true }
-//     ];
-  
-//     users.forEach(user => {
-//       it(`Login  ${user.username}`, () => {
-//         cy.login(user.username, user.password);
-//         if (user.shouldLogin) {
-//           cy.url().should("include", "/inventory.html");
-//         } else {
-//           cy.get("[data-test='error']").should("contain", user.error);
-//         }
-//       });
-//     });
-  
-//     it("Empty username and correct password", () => {
-//       cy.visit("https://www.saucedemo.com/");
-//       cy.get('[data-test="password"]').type('secret_sauce');
-//       cy.get('[data-test="login-button"]').click();
-//       cy.get('[data-test="title"]').should('be.visible');
-//     });
-  
-//     it("Correct username and empty password", () => {
-//       cy.visit("https://www.saucedemo.com/");
-//       cy.get('[data-test="username"]').type('standart_user');
-//       cy.get('[data-test="login-button"]').click();
-//       cy.get('[data-test="title"]').should('be.visible');
-//     });
-  
-//     it("Empty username and password", () => {
-//       cy.visit("https://www.saucedemo.com/");
-//       cy.get('[data-test="login-button"]').click();
-//       cy.get('[data-test="title"]').should('be.visible');
-//     });
-//   });
+    test('Correct username and empty password', async ({ page }) => {
+        await page.goto('https://www.saucedemo.com/');
+        await page.fill('[data-test="username"]', 'standart_user');
+        await page.click('[data-test="login-button"]');
+        await expect(page).toHaveTitle('[data-test="title]');
+    });
 
-
-
-
+    test('Empty username and password', async ({ page }) => {
+        await page.goto('https://www.saucedemo.com/');
+        await page.click('[data-test="login-button"]');
+        await expect(page).toHaveURL('[data-test="title"]');
+    });
   
   
