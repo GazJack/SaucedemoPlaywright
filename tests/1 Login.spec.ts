@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('@playwright/test');
+const { login } = require('../fixtures/login');
 
 test.describe("Test Case 1", () => {
     const users = [
@@ -12,14 +13,12 @@ test.describe("Test Case 1", () => {
 
     users.forEach(user => {
       test(`Login  ${user.username}`, async ({ page }) => {
-        await page.goto('https://saucedemo.com/');
-        await page.fill('[data-test="username"]', user.username);
-        await page.fill('[data-test="password"]', user.password);
-        await page.click('[data-test="login-button"]');
+        await login(page, user.username, user.password);
         if (user.shouldLogin) {
             await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
         } else {
-            await expect(page.locator('[data-test="error]')).toHaveText('user.error');
+          const errorLocator = page.locator('[data-test="error"]');
+            await expect(errorLocator).toContainText(user.error);
         };
       });
     });
@@ -28,20 +27,20 @@ test.describe("Test Case 1", () => {
         await page.goto('https://www.saucedemo.com/');
         await page.fill('[data-test="password"]', 'secret_sauce');
         await page.click('[data-test="login-button"]');
-        await expect(page).toHaveTitle('[data-test="title"]');
+        await expect(page.locator('[data-test="title"]')).toBeVisible();
     });
 
     test('Correct username and empty password', async ({ page }) => {
         await page.goto('https://www.saucedemo.com/');
-        await page.fill('[data-test="username"]', 'standart_user');
+        await page.fill('[data-test="username"]', 'standard_user');
         await page.click('[data-test="login-button"]');
-        await expect(page).toHaveTitle('[data-test="title]');
+        await expect(page.locator('[data-test="title]')).toBeVisible();
     });
 
     test('Empty username and password', async ({ page }) => {
         await page.goto('https://www.saucedemo.com/');
         await page.click('[data-test="login-button"]');
-        await expect(page).toHaveURL('[data-test="title"]');
+        await expect(page.locator('[data-test="title"]')).toBeVisible();
     });
   });
   
