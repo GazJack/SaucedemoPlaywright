@@ -1,16 +1,15 @@
 const { test, expect } = require('@playwright/test');
 const { login } = require('../fixtures/login');
 
-// Test Case 3 – Produktų filtravimas ir rūšiavimas
-test.describe('Test Case 3', () => {
-  const users = [
-    'standard_user',
-    'problem_user',
-    'performance_glitch_user',
-    'error_user',
-    'visual_user'
-  ];
+const users = [
+  'standard_user',
+  'problem_user',
+  'performance_glitch_user',
+  'error_user',
+  'visual_user'
+];
 
+test.describe('Test Case 3', () => {
   users.forEach(user => {
     test.describe(`Testing with user: ${user}`, () => {
       test.beforeEach(async ({ page }) => {

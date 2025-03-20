@@ -12,12 +12,8 @@ const users = [
   test.describe('Test Case 2', () => {
     users.forEach(user => {
       test(`Adding and removing items from the cart with user: ${user}`, async ({ page }) => {
-        await page.goto("https://www.saucedemo.com/");
-        await page.fill('[data-test="username"]', user);
-        await page.fill('[data-test="password"]', 'secret_sauce');
-        await page.click('[data-test="login-button"]');
-        await expect(page.locator('[data-test="title"]')).toContainText('Products');  
-
+        await login(page, user, 'secret_sauce');
+        
         await page.click('[data-test="add-to-cart-sauce-labs-backpack"]');
         await page.click('[data-test="add-to-cart-sauce-labs-bike-light"]');
         await page.click('[data-test="add-to-cart-sauce-labs-bolt-t-shirt"]');
