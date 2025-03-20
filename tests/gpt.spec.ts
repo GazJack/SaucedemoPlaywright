@@ -142,7 +142,6 @@ test.describe('Test Case 3', () => {
 });
 
 // Test Case 4 – Pirkimo procesas
-test.describe('Test Case 4', () => {
   const users = [
     'standard_user',
     'problem_user',
@@ -151,6 +150,7 @@ test.describe('Test Case 4', () => {
     'visual_user'
   ];
 
+  test.describe('Test Case 4', () => {
   users.forEach(user => {
     test.describe(`Testing with user: ${user}`, () => {
       test.beforeEach(async ({ page }) => {
@@ -174,7 +174,6 @@ test.describe('Test Case 4', () => {
 });
 
 // Test Case 5 – Logout funkcionalumas
-test.describe('Test Case 5', () => {
   const users = [
     'standard_user',
     'problem_user',
@@ -183,6 +182,7 @@ test.describe('Test Case 5', () => {
     'visual_user'
   ];
 
+  test.describe('Test Case 5', () => {
   users.forEach(user => {
     test.describe(`Logout with user: ${user}`, () => {
       test.beforeEach(async ({ page }) => {
