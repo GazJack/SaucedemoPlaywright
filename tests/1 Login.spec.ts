@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 
+test.describe("Test Case 1", () => {
     const users = [
       { username: "standard_user", password: "secret_sauce", shouldLogin: true },
       { username: "locked_out_user", password: "secret_sauce", shouldLogin: false, error: "Sorry, this user has been locked out." },
@@ -42,5 +43,6 @@ import { test, expect } from '@playwright/test';
         await page.click('[data-test="login-button"]');
         await expect(page).toHaveURL('[data-test="title"]');
     });
+  });
   
   
