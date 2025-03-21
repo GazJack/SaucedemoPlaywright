@@ -1,5 +1,5 @@
-const { test, expect } = require('@playwright/test');
-const { login } = require('../fixtures/login');
+import { test, expect } from '@playwright/test';
+import { login } from '../fixtures/login';
 
 const users = [
   'standard_user',
@@ -19,7 +19,7 @@ test.describe('Test Case 3', () => {
       test('Filters and sorts products by name (A to Z)', async ({ page }) => {
         await page.selectOption('[data-test="product-sort-container"]', 'az');
         const names = await page.$$eval('.inventory_item_name', items =>
-          items.map(item => item.innerText.trim())
+          items.map(item => (item as HTMLElement).innerText.trim())
         );
         const sortedNames = [...names].sort((a, b) => a.localeCompare(b));
         expect(names).toEqual(sortedNames);
@@ -28,7 +28,7 @@ test.describe('Test Case 3', () => {
       test('Filters and sorts products by name (Z to A)', async ({ page }) => {
         await page.selectOption('[data-test="product-sort-container"]', 'za');
         const names = await page.$$eval('.inventory_item_name', items =>
-          items.map(item => item.innerText.trim())
+          items.map(item => (item as HTMLElement).innerText.trim())
         );
         const sortedNamesDesc = [...names].sort((a, b) => b.localeCompare(a));
         expect(names).toEqual(sortedNamesDesc);
@@ -37,7 +37,7 @@ test.describe('Test Case 3', () => {
       test('Filters and sorts products by price (low to high)', async ({ page }) => {
         await page.selectOption('[data-test="product-sort-container"]', 'lohi');
         const prices = await page.$$eval('.inventory_item_price', items =>
-          items.map(item => parseFloat(item.innerText.replace('$', '')))
+          items.map(item => parseFloat((item as HTMLElement).innerText.replace('$', '')))
         );
         const sortedPrices = [...prices].sort((a, b) => a - b);
         expect(prices).toEqual(sortedPrices);
@@ -46,7 +46,7 @@ test.describe('Test Case 3', () => {
       test('Filters and sorts products by price (high to low)', async ({ page }) => {
         await page.selectOption('[data-test="product-sort-container"]', 'hilo');
         const prices = await page.$$eval('.inventory_item_price', items =>
-          items.map(item => parseFloat(item.innerText.replace('$', '')))
+          items.map(item => parseFloat((item as HTMLElement).innerText.replace('$', '')))
         );
         const sortedPricesDesc = [...prices].sort((a, b) => b - a);
         expect(prices).toEqual(sortedPricesDesc);
@@ -54,4 +54,3 @@ test.describe('Test Case 3', () => {
     });
   });
 });
-

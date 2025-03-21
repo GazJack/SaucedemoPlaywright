@@ -1,5 +1,5 @@
-const { test, expect } = require('@playwright/test');
-const { login } = require('../fixtures/login');
+import { test, expect } from '@playwright/test';
+import { login } from '../fixtures/login';
 
 test.describe("Test Case 1", () => {
     const users = [
@@ -18,7 +18,7 @@ test.describe("Test Case 1", () => {
             await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
         } else {
           const errorLocator = page.locator('[data-test="error"]');
-            await expect(errorLocator).toContainText(user.error);
+            await expect(errorLocator).toContainText('user.error');
         };
       });
     });
@@ -43,5 +43,5 @@ test.describe("Test Case 1", () => {
         await expect(page.locator('[data-test="title"]')).toBeVisible();
     });
   });
-  
+
   

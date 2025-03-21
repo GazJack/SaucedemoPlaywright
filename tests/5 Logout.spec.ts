@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 const { login } = require('../fixtures/login');
 
 const users = [
