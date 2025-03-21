@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { login } from '../fixtures/login';
+import { login } from '../fixtures/login.js';
 
 test.describe("Test Case 1", () => {
     const users = [
