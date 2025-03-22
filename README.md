@@ -1,4 +1,4 @@
-# 🛠️ SauceDemo Playwright
+# 🛠️ SauceDemo Website Testing Playwright
 
 This repository contains automated end-to-end tests for the [SauceDemo](https://www.saucedemo.com) web application using the [Playwright](https://playwright.dev) framework. These tests help verify the core functionalities of the SauceDemo site, including user authentication, product listing, shopping cart operations, and the checkout process.
 
